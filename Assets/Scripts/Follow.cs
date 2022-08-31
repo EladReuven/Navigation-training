@@ -12,24 +12,35 @@ public class Follow : MonoBehaviour
     public int currentWaypointIndex = 0;
     public bool looping = true, finishedRoute = false;
 
+    //private void Start()
+    //{
+    //    agent.SetDestination(followDestinations[currentWaypointIndex].position);
+    //}
+
     private void Update()
     {
-        while(!finishedRoute)
+        if (!finishedRoute)
         {
-            if(agent.remainingDistance <= minDisForNextWaypoint)
+            Debug.Log(agent.remainingDistance);
+            if(!agent.pathPending)
             {
+                if(agent.remainingDistance <= minDisForNextWaypoint)
+                {
                 GoToNextWayPoint();
+                Debug.Log("remaining dis is smol");
+                }
             }
         }
     }
 
     void GoToNextWayPoint()
     {
+        Debug.Log(currentWaypointIndex);
         agent.SetDestination(followDestinations[currentWaypointIndex].position);
         currentWaypointIndex++;
         if(currentWaypointIndex >= followDestinations.Length)
         {
-            if(looping)
+            if (looping)
             {
                 currentWaypointIndex = 0;
             }
